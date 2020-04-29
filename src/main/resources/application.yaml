@@ -1,0 +1,39 @@
+spring.profiles.active: develop
+spring.main.allow-bean-definition-overriding: true
+
+server:
+  port: 8080
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: task-service
+          uri: lb://task-service
+          predicates:
+            - Path=/api/task/**
+        - id: sprint-service
+          uri: lb://sprint-service
+          predicates:
+            - Path=/api/sprint/**
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URL}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS
