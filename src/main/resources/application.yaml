@@ -16,12 +16,15 @@ spring:
         - id: task-service
           uri: lb://task-service
           predicates:
-            - Path=/api/task/**
+            - Path=/api/tasks/**
         - id: sprint-service
           uri: lb://sprint-service
           predicates:
-            - Path=/api/sprint/**
-
+            - Path=/api/sprints/**
+        - id: project-service
+          uri: lb://project-service
+          predicates:
+            - Path=/api/projects/**
 eureka:
   instance:
     prefer-ip-address: true
